@@ -304,7 +304,7 @@ function apachesolr_autocomplete_suggest($keys) {
   // Query Solr
   $response = $query->search($keys);
   foreach ($response->response->docs as $key => $row) {
-    $matches[] = array('key' => false, 'display' => $row->label);
+    $matches[] = array('key' => $row->label, 'display' => $row->label);
   }
 
   return $matches;
