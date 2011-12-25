@@ -1,32 +1,5 @@
 <?php
 
-  // $keys = 'probo';
-  // module_load_include('module', 'apachesolr_search', 'apachesolr_search');
-
-
-  // // Query Solr for $keys so that suggestions will always return results.
-  // $query = apachesolr_drupal_query($keys);
-
-  // // This hook allows modules to modify the query and params objects.
-  // drupal_alter('apachesolr_query', $query);
-  // if (!$query) {
-  //   return array();
-  // }
-  // apachesolr_search_add_spellcheck_params($query);
-  // foreach ($params as $param => $paramValue) {
-  //   $query->addParam($param, $paramValue);
-  // }
-  // apachesolr_search_add_boost_params($query);
-
-  // // Query Solr
-  // $response = $query->search($keys);
-  // foreach ($response->response->docs as $key => $row) {
-  //   $matches[] = $row->label;
-  // }
-  // var_dump($response->response->docs);
-  // die();
-
-
 /**
  * @file
  *   Alters search forms to suggest terms using Apache Solr using AJAX.
@@ -142,6 +115,7 @@ function apachesolr_autocomplete_callback($keys = '') {
       $result[substr($key,1)] = $display;
     }
   }
+  //HACK - just show the autocomplete suggestions and nothing more
   $result = apachesolr_autocomplete_suggest($keys);
   drupal_json_output($result);
   exit();
@@ -215,6 +189,7 @@ function apachesolr_autocomplete_basic_params($suggestions_to_return) {
     'facet.limit' => $suggestions_to_return * 5,
     'facet.mincount' => 1,
     'start' => 0,
+    //HACK - show some search results
     'rows' => 50,
   );
 }
@@ -306,6 +281,7 @@ function apachesolr_autocomplete_suggest_additional_term($keys, $suggestions_to_
   return $suggestions;
 }
 
+//HACK - show whole title field results, not facets
 function apachesolr_autocomplete_suggest($keys) {
   $matches = array();
   $suggestions = array();
